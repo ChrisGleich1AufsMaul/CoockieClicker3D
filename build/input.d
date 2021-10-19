@@ -1,5 +1,5 @@
-input.o: P:/Homebrew/CookieClicker3D/source/input.c \
- P:/Homebrew/CookieClicker3D/source/input.h \
+input.o: P:/Homebrew/CookieClicker3D_git/source/input.c \
+ P:/Homebrew/CookieClicker3D_git/source/input.h \
  G:/devkitPro/libctru/include/3ds.h \
  G:/devkitPro/libctru/include/3ds/types.h \
  G:/devkitPro/libctru/include/3ds/result.h \
@@ -80,7 +80,7 @@ input.o: P:/Homebrew/CookieClicker3D/source/input.c \
  G:/devkitPro/libctru/include/3ds/romfs.h \
  G:/devkitPro/libctru/include/3ds/font.h \
  G:/devkitPro/libctru/include/3ds/gdbhio_dev.h
-P:/Homebrew/CookieClicker3D/source/input.h:
+P:/Homebrew/CookieClicker3D_git/source/input.h:
 G:/devkitPro/libctru/include/3ds.h:
 G:/devkitPro/libctru/include/3ds/types.h:
 G:/devkitPro/libctru/include/3ds/result.h:

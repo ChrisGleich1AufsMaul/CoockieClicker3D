@@ -14,7 +14,7 @@ char* msgMessage = "";
 int msgButtons = 1;
 bool madeTranslation = false;
 
-C2D_Sprite cookie, shop;
+C2D_Sprite cookie, shop_icon, shop_tab;
 static C2D_SpriteSheet spriteSheet;
 
 static void initSprites() {
@@ -25,9 +25,12 @@ static void initSprites() {
 	C2D_SpriteFromSheet(&cookie, spriteSheet, 0);
 	C2D_SpriteSetPos(&cookie, 320/2 - 55, 70);
 
-	C2D_SpriteFromSheet(&shop, spriteSheet, 1);
-	C2D_SpriteSetPos(&shop, 320/2 - 60, 190);
+	C2D_SpriteFromSheet(&shop_icon, spriteSheet, 1);
+	C2D_SpriteSetPos(&shop_icon, 320/2 - 60, 190);
 	//C2D_SpriteScale(&cookie, 1.2, 1.2);
+
+	C2D_SpriteFromSheet(&shop_tab, spriteSheet, 2);
+	C2D_SpriteSetPos(&shop_tab, 0, 0);
 }
 
 int main()
@@ -50,7 +53,7 @@ int main()
 	C3D_RenderTarget* bottom = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
 
 
-	
+	initBuffer();
 	initSprites();
 	initMainScreen();
 
@@ -73,32 +76,35 @@ int main()
 
 
 			C2D_SceneBegin(top);
-				renderMainScreen_Top(true);
+				renderMainScreen_Top(true); //log output: true
 				
 			C2D_SceneBegin(bottom);
 				if (mode == 1)
 				{							
 						C2D_DrawSprite(&cookie);
-						C2D_DrawSprite(&shop);
+						C2D_DrawSprite(&shop_icon);
 						renderMainScreen_Bottom();
 				}
 				else if(mode == 2)
 				{	
-					if(madeTranslation == false)
-					{
-						for(int i=0; i<70; i++)
-						{
-							C2D_DrawSprite(&shop);
-							C2D_SpriteMove(&shop, 0, -.5);
-						}
-						madeTranslation = true;
-					}
+					// if(madeTranslation == false)
+					// {
+					// 	for(int i=0; i<70; i++)
+					// 	{
+					// 		C2D_DrawSprite(&shop_icon);
+					// 		C2D_SpriteMove(&shop_icon, 0, -.5);
+					// 	}
+					// 	madeTranslation = true;
+					// }
+					// C2D_DrawSprite(&shop_icon);
+					// C2D_DrawSprite(&cookie);
+					C2D_DrawSprite(&shop_tab);
 
-					//renderShopScreen_Bottom();
+					renderShopScreen_Bottom();
 				}
 				else if (mode == 3)//Settings
 				{
-						renderBottomSettingsScreen();
+					// renderBottomSettingsScreen();
 					
 				}
 		C3D_FrameEnd(0);

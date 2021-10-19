@@ -21,12 +21,13 @@ C2D_Text g_headlineText[3], g_staticText[13];
 ///////////////////////////////////////////
 //                  C2D                  //
 ///////////////////////////////////////////
-void initMainScreen(void)
+void initBuffer()
 {
-	//topscreen
 	g_staticBuf  = C2D_TextBufNew(4096); // support up to 4096 glyphs in the buffer
 	g_dynamicBuf = C2D_TextBufNew(4096);
-
+}
+void initMainScreen(void)
+{
 	//Top screen
 	C2D_TextParse(&g_headlineText[0], g_staticBuf, "CookieClicker3D");
 	C2D_TextOptimize(&g_headlineText[0]);
@@ -34,10 +35,6 @@ void initMainScreen(void)
 }
 void InitSettingsScreen(void)
 {
-	g_staticBuf  = C2D_TextBufNew(4096); // support up to 4096 glyphs in the buffer
-
-
-
 	C2D_TextParse(&g_staticText[11], g_staticBuf, "");
 	C2D_TextOptimize(&g_staticText[11]);
 }
@@ -60,12 +57,17 @@ void renderMainScreen_Top(bool log)
 	C2D_Text dynText;
 
 	if(log){
-		C2D_DrawRectSolid(0.0, 160., 0.4, 150, 60, C2D_Color32f(0,0,0,1));
+		C2D_DrawRectSolid(0.0, 150., 0.4, 150, 60, C2D_Color32f(0,0,0,1));
 
 		snprintf(buf, sizeof(buf), "%li", hidKeysDown());
 		C2D_TextParse(&dynText, g_dynamicBuf, buf);
 		C2D_TextOptimize(&dynText);
-		C2D_DrawText(&dynText, C2D_AtBaseline | C2D_WithColor, 10.0f, 190.0f, 0.5f, 0.8f, 0.8f, C2D_Color32f(1.0f,1.0f,1.0f,1.0f));	
+		C2D_DrawText(&dynText, C2D_AtBaseline | C2D_WithColor, 10.0f, 170.0f, 0.5f, 0.7f, 0.7f, C2D_Color32f(1.0f,1.0f,1.0f,1.0f));	
+
+		snprintf(buf, sizeof(buf), "%d", sizeof(upgrade));
+		C2D_TextParse(&dynText, g_dynamicBuf, buf);
+		C2D_TextOptimize(&dynText);
+		C2D_DrawText(&dynText, C2D_AtBaseline | C2D_WithColor, 10.0f, 200.0f, 0.5f, 0.7f, 0.7f, C2D_Color32f(1.0f,1.0f,1.0f,1.0f));	
 	}
 
 }
@@ -92,32 +94,78 @@ void renderMainScreen_Bottom()
 	C2D_TextOptimize(&dynText);
 	C2D_DrawText(&dynText, C2D_AtBaseline | C2D_WithColor, 10.0f, 40.0f, 0.5f, .7f, .7f, C2D_Color32f(.8f, .8f, .8f, 1.0f));	
 }
-/////////////////////////////////////////				Settings Screen 			////////////////////////////
-void renderBottomSettingsScreen()
-{   
-	C2D_DrawRectSolid(10.0f, 10.0f, 0.0f, 30.0f, 30.0f, C2D_Color32f(0.3f,0.3f,0.3f,1.0f));//maps symbol
-	C2D_DrawRectSolid(12.0f, 12.0f, 0.0f, 26.0f, 26.0f, C2D_Color32f(0.8f,0.8f,0.8f,0.9f));
+/////////////////////////////////////////				Shop Screen 			////////////////////////////
+void renderShopScreen_Top(bool log)
+{
+	 C2D_DrawText(&g_headlineText[0], C2D_AtBaseline | C2D_WithColor, 60.0f, 100.0f, 0.5f, 1.4f, 1.4f, C2D_Color32f(1.0f,.6f,.2f,1.0f));	
 
-	C2D_DrawRectSolid(50.0f, 10.0f, 0.0f, 200.0f, 30.0f, C2D_Color32f(0.7f,0.7f,0.7f,0.8f));//textbox
 
-	C2D_DrawRectSolid(10.0f, 50.0f, 0.0f, 50.0f, 30.0f, C2D_Color32f(0.3f,0.3f,0.3f,1.0f));//selection
-	C2D_DrawRectSolid(12.0f, 52.0f, 0.0f, 46.0f, 26.0f, C2D_Color32f(0.8f,0.8f,0.8f,0.9f));
-
+	//dynamic text
 	C2D_TextBufClear(g_dynamicBuf);
 	
-	// char buf[160];
-	// C2D_Text dynText;
-	// snprintf(buf, sizeof(buf), "%s", town);
-	// C2D_TextParse(&dynText, g_dynamicBuf, buf);
-	// C2D_TextOptimize(&dynText);
-	// C2D_DrawText(&dynText, C2D_AtBaseline | C2D_WithColor, 55.0f, 35.0f, 0.1f, 0.9f, 0.9f, C2D_Color32f(1.0f,1.0f,1.0f,1.0f));
+	char buf[160];
+	C2D_Text dynText;
 
-	//maps symbol	
-	// snprintf(buf, sizeof(buf), "");
-	// C2D_TextParse(&dynText, g_dynamicBuf, buf);
-	// C2D_TextOptimize(&dynText);
-	// C2D_DrawText(&dynText, C2D_AtBaseline | C2D_WithColor, 12.0f, 35.0f, 0.1f, 1.1f, 1.1f, C2D_Color32f(1.0f,1.0f,1.0f,1.0f));
+	if(log){
+		C2D_DrawRectSolid(0.0, 160., 0.4, 150, 60, C2D_Color32f(0,0,0,1));
+
+		snprintf(buf, sizeof(buf), "%li", hidKeysDown());
+		C2D_TextParse(&dynText, g_dynamicBuf, buf);
+		C2D_TextOptimize(&dynText);
+		C2D_DrawText(&dynText, C2D_AtBaseline | C2D_WithColor, 10.0f, 190.0f, 0.5f, 0.8f, 0.8f, C2D_Color32f(1.0f,1.0f,1.0f,1.0f));	
+	}
+
 }
+void renderShopScreen_Bottom()
+{
+	//dynamic text
+	C2D_TextBufClear(g_dynamicBuf);
+
+	char buf[160];
+	C2D_Text dynText;
+
+	int upgrade_total = 2;//sizeof(upgrade);
+	for (int i=0; i<upgrade_total; i++){
+		C2D_DrawRectSolid(20.0f, 85.0f + 25*i, 0.4f, 270.0f, 20.0f, C2D_Color32f(.5f,.5f,.5f,.5f));
+
+		snprintf(buf, sizeof(buf), "%s", upgrade[i]);
+		C2D_TextParse(&dynText, g_dynamicBuf, buf);
+		C2D_TextOptimize(&dynText);
+		C2D_DrawText(&dynText, C2D_AtBaseline | C2D_WithColor, 25.0f, 100.0f + 25*i, 0.5f, .6f, .6f, C2D_Color32f(1.0f,1.0f,1.0f,1.0f));
+		
+		snprintf(buf, sizeof(buf), "%f", upgrade_gain[i]);
+		C2D_TextParse(&dynText, g_dynamicBuf, buf);
+		C2D_TextOptimize(&dynText);
+		C2D_DrawText(&dynText, C2D_AtBaseline | C2D_WithColor, 225.0f, 100.0f + 25*i, 0.5f, .6f, .6f, C2D_Color32f(1.0f,1.0f,1.0f,1.0f));
+	}
+}
+
+/////////////////////////////////////////				Settings Screen 			////////////////////////////
+	// void renderBottomSettingsScreen()
+	// {   
+	// 	C2D_DrawRectSolid(10.0f, 10.0f, 0.0f, 30.0f, 30.0f, C2D_Color32f(0.3f,0.3f,0.3f,1.0f));//maps symbol
+	// 	C2D_DrawRectSolid(12.0f, 12.0f, 0.0f, 26.0f, 26.0f, C2D_Color32f(0.8f,0.8f,0.8f,0.9f));
+
+	// 	C2D_DrawRectSolid(50.0f, 10.0f, 0.0f, 200.0f, 30.0f, C2D_Color32f(0.7f,0.7f,0.7f,0.8f));//textbox
+
+	// 	C2D_DrawRectSolid(10.0f, 50.0f, 0.0f, 50.0f, 30.0f, C2D_Color32f(0.3f,0.3f,0.3f,1.0f));//selection
+	// 	C2D_DrawRectSolid(12.0f, 52.0f, 0.0f, 46.0f, 26.0f, C2D_Color32f(0.8f,0.8f,0.8f,0.9f));
+
+	// 	C2D_TextBufClear(g_dynamicBuf);
+		
+	// 	// char buf[160];
+	// 	// C2D_Text dynText;
+	// 	// snprintf(buf, sizeof(buf), "%s", town);
+	// 	// C2D_TextParse(&dynText, g_dynamicBuf, buf);
+	// 	// C2D_TextOptimize(&dynText);
+	// 	// C2D_DrawText(&dynText, C2D_AtBaseline | C2D_WithColor, 55.0f, 35.0f, 0.1f, 0.9f, 0.9f, C2D_Color32f(1.0f,1.0f,1.0f,1.0f));
+
+	// 	//maps symbol	
+	// 	// snprintf(buf, sizeof(buf), "");
+	// 	// C2D_TextParse(&dynText, g_dynamicBuf, buf);
+	// 	// C2D_TextOptimize(&dynText);
+	// 	// C2D_DrawText(&dynText, C2D_AtBaseline | C2D_WithColor, 12.0f, 35.0f, 0.1f, 1.1f, 1.1f, C2D_Color32f(1.0f,1.0f,1.0f,1.0f));
+	// }
 
 
 

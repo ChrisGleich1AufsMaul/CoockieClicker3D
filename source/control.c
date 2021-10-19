@@ -22,10 +22,11 @@ bool msgbox = false;
 int cookiesTotal = 0;
 float cookiesPerSecond = 0;
 
+char upgrade[2][20] = {"Autoclicker", "Clock"};
+float upgrade_gain[2] = {.1, 			1};
 
 
-
-	u32 kDownOld = 0, kHeldOld = 0, kUpOld = 0; //In these variables there will be information about keys detected in the previous frame
+u32 kDownOld = 0, kHeldOld = 0, kUpOld = 0; //In these variables there will be information about keys detected in the previous frame
 
 //repeats
 void app()
@@ -67,14 +68,10 @@ void app()
 		kUpOld = kUp;
 		// }
 
-		if (ButtonClick("settings", 300, 100, 20, 30) && kDown) {
-			mode = 3; 
-		}
-
 	}
-	else if (mode == 3) //Settings
+	else if (mode == 2) //Shop
 	{		
-		if (ButtonClick("settings", 0, 100, 20, 30) && kDown) {
+		if (ButtonClick("closeShop_Click", 320/2 - 60, 5, 120, 50) && kDown) {
 			mode = 1; 
 		}
 

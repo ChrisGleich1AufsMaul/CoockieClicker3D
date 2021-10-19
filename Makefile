@@ -41,7 +41,7 @@ GRAPHICS	:=	gfx
 ROMFS		:=	romfs
 GFXBUILD	:=	$(ROMFS)/gfx
 
-APP_TITLE       := CookieClicker3D
+APP_TITLE       := CookieClicker3D#$(TARGET)#
 APP_DESCRIPTION := 
 APP_AUTHOR      := Chris
 #---------------------------------------------------------------------------------
@@ -147,10 +147,12 @@ ifeq ($(strip $(ICON)),)
 	else
 		ifneq (,$(findstring icon.png,$(icons)))
 			export APP_ICON := $(TOPDIR)/icon.png
+			#export APP_ICON := $(TARGET)/icon.png
 		endif
 	endif
 else
 	export APP_ICON := $(TOPDIR)/$(ICON)
+	#export APP_ICON := $(TARGET)/$(ICON)
 endif
 
 ifeq ($(strip $(NO_SMDH)),)

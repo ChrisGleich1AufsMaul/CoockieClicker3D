@@ -1,4 +1,4 @@
-control.o: P:/Homebrew/CookieClicker3D/source/control.c \
+control.o: P:/Homebrew/CookieClicker3D_git/source/control.c \
  G:/devkitPro/libctru/include/3ds.h \
  G:/devkitPro/libctru/include/3ds/types.h \
  G:/devkitPro/libctru/include/3ds/result.h \
@@ -79,9 +79,9 @@ control.o: P:/Homebrew/CookieClicker3D/source/control.c \
  G:/devkitPro/libctru/include/3ds/romfs.h \
  G:/devkitPro/libctru/include/3ds/font.h \
  G:/devkitPro/libctru/include/3ds/gdbhio_dev.h \
- P:/Homebrew/CookieClicker3D/source/control.h \
- P:/Homebrew/CookieClicker3D/source/input.h \
- P:/Homebrew/CookieClicker3D/source/gui.h \
+ P:/Homebrew/CookieClicker3D_git/source/control.h \
+ P:/Homebrew/CookieClicker3D_git/source/input.h \
+ P:/Homebrew/CookieClicker3D_git/source/gui.h \
  G:/devkitPro/libctru/include/citro2d.h \
  G:/devkitPro/libctru/include/citro3d.h \
  G:/devkitPro/libctru/include/c3d/types.h \
@@ -106,7 +106,7 @@ control.o: P:/Homebrew/CookieClicker3D/source/control.c \
  G:/devkitPro/libctru/include/c2d/sprite.h \
  G:/devkitPro/libctru/include/c2d/text.h \
  G:/devkitPro/libctru/include/c2d/font.h \
- P:/Homebrew/CookieClicker3D/source/main.h
+ P:/Homebrew/CookieClicker3D_git/source/main.h
 G:/devkitPro/libctru/include/3ds.h:
 G:/devkitPro/libctru/include/3ds/types.h:
 G:/devkitPro/libctru/include/3ds/result.h:
@@ -187,9 +187,9 @@ G:/devkitPro/libctru/include/3ds/archive.h:
 G:/devkitPro/libctru/include/3ds/romfs.h:
 G:/devkitPro/libctru/include/3ds/font.h:
 G:/devkitPro/libctru/include/3ds/gdbhio_dev.h:
-P:/Homebrew/CookieClicker3D/source/control.h:
-P:/Homebrew/CookieClicker3D/source/input.h:
-P:/Homebrew/CookieClicker3D/source/gui.h:
+P:/Homebrew/CookieClicker3D_git/source/control.h:
+P:/Homebrew/CookieClicker3D_git/source/input.h:
+P:/Homebrew/CookieClicker3D_git/source/gui.h:
 G:/devkitPro/libctru/include/citro2d.h:
 G:/devkitPro/libctru/include/citro3d.h:
 G:/devkitPro/libctru/include/c3d/types.h:
@@ -214,4 +214,4 @@ G:/devkitPro/libctru/include/c2d/spritesheet.h:
 G:/devkitPro/libctru/include/c2d/sprite.h:
 G:/devkitPro/libctru/include/c2d/text.h:
 G:/devkitPro/libctru/include/c2d/font.h:
-P:/Homebrew/CookieClicker3D/source/main.h:
+P:/Homebrew/CookieClicker3D_git/source/main.h:
