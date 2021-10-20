@@ -1,6 +1,5 @@
 # CoockieClicker3D
-Main Screen of CookieClicker3D
-
+CookieClicker3D is a homebrew software for the Nintendo 3DS written in C
 
 
 
