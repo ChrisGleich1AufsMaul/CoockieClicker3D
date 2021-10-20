@@ -1,5 +1,5 @@
 # CookieClicker3D  
-CookieClicker3D is a homebrew software for the Nintendo 3DS written in C  
+CookieClicker3D 🍪 is a homebrew software for the Nintendo 3DS 🎮 written in C  
 
 ### Screenshots
 | Main screen | Shop screen |
@@ -9,7 +9,7 @@ CookieClicker3D is a homebrew software for the Nintendo 3DS written in C
 
   
 ### Bugs
-- [ ] Two cookies when tapping once on the cookie
+- [ ] Two cookies when tapping, holding and releasing once on the cookie
   
 ### ToDo
 - Shop:
