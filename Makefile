@@ -33,41 +33,52 @@ include $(DEVKITARM)/3ds_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
-SOURCES		:=	source
+SOURCES		:=	source #source/system source/system/util source/system/draw source/youtube_parser library/json11 library/duktape source/scenes source/ui source/ui/views source/ui/views/specialized source/network
 DATA		:=	data
 INCLUDES	:=	include
 GRAPHICS	:=	gfx
-#GFXBUILD	:=	$(BUILD)S
 ROMFS		:=	romfs
+LIBRARY		:=	library
 GFXBUILD	:=	$(ROMFS)/gfx
+#---------------------------------------------------------------------------------
+APP_VER						:= 9
+APP_TITLE					:= CookieClicker3D
+APP_DESCRIPTION				:= Cookie Clicker for the 3DS
+APP_AUTHOR					:= ChrisGleich1AufsMaul
+PRODUCT_CODE				:= CTR-COC
+UNIQUE_ID					:= 0xBF74D
 
-APP_TITLE       := CookieClicker3D#$(TARGET)#
-APP_DESCRIPTION := 
-APP_AUTHOR      := Chris
+BANNER_AUDIO				:= resources/banner.wav
+#BANNER_IMAGE				:= resources/banner.png
+BANNER_IMAGE				:= resources/banner_3ds.cgfx
+ICON        				:= resources/icon.png
+RSF_PATH					:= resources/app.rsf
+
+#---------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
 ARCH	:=	-march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft
 
-CFLAGS	:=	-g -Wall -O2 -mword-relocations \
-			-fomit-frame-pointer -ffunction-sections \
-			$(ARCH)
+CFLAGS	:= -Wall -Wextra -Wno-unused -Wno-psabi -O2 -mword-relocations \
+		-fomit-frame-pointer -ffunction-sections -fdata-sections \
+		$(ARCH)
 
-CFLAGS	+=	$(INCLUDE) -DARM11 -D_3DS
+CFLAGS	+=	$(INCLUDE) -DARM11 -D__3DS__ -DCURL_STATICLIB
 
-CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
+CXXFLAGS	:= $(CFLAGS) -fno-exceptions -std=gnu++14
 
-ASFLAGS	:=	-g $(ARCH)
-LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
+ASFLAGS	:= $(ARCH)
+LDFLAGS	=	-specs=3dsx.specs $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lcitro2d -lcitro3d -lctru -lm
+LIBS	:= -lavfilter -lswresample -lavformat -lswscale -lavcodec -lavutil -lcurl -lmbedtls -lmbedx509 -lmbedcrypto -lz  -lcitro2d -lcitro3d -lctru -lm
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS	:= $(CTRULIB)
-
+LIBDIRS := library/FFmpeg library/libctru
+LIBDIRS_DEVKITPRO := libctru portlibs/3ds
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional
@@ -133,10 +144,12 @@ export HFILES	:=	$(PICAFILES:.v.pica=_shbin.h) $(SHLISTFILES:.shlist=_shbin.h) \
 			$(GFXFILES:.t3s=.h)
 
 export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
-			$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
+			$(foreach dir,$(LIBDIRS),-I$(CURDIR)/$(dir)/include) \
+			$(foreach dir,$(LIBDIRS_DEVKITPRO),-I$(DEVKITPRO)/$(dir)/include) \
+			-I$(CURDIR)/$(LIBRARY) \
 			-I$(CURDIR)/$(BUILD)
 
-export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(dir)/lib)
+export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(CURDIR)/$(dir)/lib) $(foreach dir,$(LIBDIRS_DEVKITPRO),-L$(DEVKITPRO)/$(dir)/lib)
 
 export _3DSXDEPS	:=	$(if $(NO_SMDH),,$(OUTPUT).smdh)
 
@@ -147,12 +160,10 @@ ifeq ($(strip $(ICON)),)
 	else
 		ifneq (,$(findstring icon.png,$(icons)))
 			export APP_ICON := $(TOPDIR)/icon.png
-			#export APP_ICON := $(TARGET)/icon.png
 		endif
 	endif
 else
 	export APP_ICON := $(TOPDIR)/$(ICON)
-	#export APP_ICON := $(TARGET)/$(ICON)
 endif
 
 ifeq ($(strip $(NO_SMDH)),)
@@ -166,8 +177,52 @@ endif
 .PHONY: all clean
 
 #---------------------------------------------------------------------------------
+MAKEROM      	?= resources/makerom
+MAKEROM_WIN     ?= resources/makerom.exe
+MAKEROM_ARGS := -elf "$(OUTPUT).elf" -rsf "$(RSF_PATH)" -banner "$(BUILD)/banner.bnr" -icon "$(BUILD)/icon.icn" -DAPP_TITLE="$(APP_TITLE)" -DAPP_PRODUCT_CODE="$(PRODUCT_CODE)" -DAPP_UNIQUE_ID="$(UNIQUE_ID)"
+
+ifneq ($(strip $(LOGO)),)
+	MAKEROM_ARGS	+=	 -logo "$(LOGO)"
+endif
+ifneq ($(strip $(ROMFS)),)
+	MAKEROM_ARGS	+=	 -DAPP_ROMFS="$(ROMFS)"
+endif
+
+BANNERTOOL   ?= resources/bannertool
+BANNERTOOL_WIN   ?= resources/bannertool.exe
+
+ifeq ($(suffix $(BANNER_IMAGE)),.cgfx)
+	BANNER_IMAGE_ARG := -ci
+else
+	BANNER_IMAGE_ARG := -i
+endif
+
+ifeq ($(suffix $(BANNER_AUDIO)),.cwav)
+	BANNER_AUDIO_ARG := -ca
+else
+	BANNER_AUDIO_ARG := -a
+endif
+#
+
+#---------------------------------------------------------------------------------
+
 all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
-	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+	@echo Building 3dsx...
+	@$(MAKE) -j -s --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+	@echo
+	@echo Building cia...
+	@$(BANNERTOOL) makebanner $(BANNER_IMAGE_ARG) $(BANNER_IMAGE) $(BANNER_AUDIO_ARG) $(BANNER_AUDIO) -o $(BUILD)/banner.bnr
+	@$(BANNERTOOL) makesmdh -s "$(APP_TITLE)" -l "$(APP_DESCRIPTION)" -p $(APP_AUTHOR) -i $(APP_ICON) -o $(BUILD)/icon.icn
+	@$(MAKEROM) -f cia -o $(OUTPUT).cia -target t -exefslogo $(MAKEROM_ARGS) -ver $(APP_VER)
+
+all_win: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
+	@echo Building 3dsx...
+	@$(MAKE) -j -s --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+	@echo
+	@echo Building cia...
+	@$(BANNERTOOL_WIN) makebanner $(BANNER_IMAGE_ARG) $(BANNER_IMAGE) $(BANNER_AUDIO_ARG) $(BANNER_AUDIO) -o $(BUILD)/banner.bnr
+	@$(BANNERTOOL_WIN) makesmdh -s "$(APP_TITLE)" -l "$(APP_DESCRIPTION)" -p $(APP_AUTHOR) -i $(APP_ICON) -o $(BUILD)/icon.icn
+	@$(MAKEROM_WIN) -f cia -o $(OUTPUT).cia -target t -exefslogo $(MAKEROM_ARGS) -ver $(APP_VER)
 
 $(BUILD):
 	@mkdir -p $@
@@ -185,7 +240,7 @@ endif
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf $(GFXBUILD)
+	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf $(TARGET).cia
 
 #---------------------------------------------------------------------------------
 $(GFXBUILD)/%.t3x	$(BUILD)/%.h	:	%.t3s

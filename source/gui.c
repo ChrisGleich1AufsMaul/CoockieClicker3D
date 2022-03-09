@@ -97,7 +97,7 @@ void renderMainScreen_Bottom()
 /////////////////////////////////////////				Shop Screen 			////////////////////////////
 void renderShopScreen_Top(bool log)
 {
-	 C2D_DrawText(&g_headlineText[0], C2D_AtBaseline | C2D_WithColor, 60.0f, 100.0f, 0.5f, 1.4f, 1.4f, C2D_Color32f(1.0f,.6f,.2f,1.0f));	
+	C2D_DrawText(&g_headlineText[0], C2D_AtBaseline | C2D_WithColor, 60.0f, 100.0f, 0.5f, 1.4f, 1.4f, C2D_Color32f(1.0f,.6f,.2f,1.0f));	
 
 
 	//dynamic text
@@ -124,7 +124,7 @@ void renderShopScreen_Bottom()
 	char buf[160];
 	C2D_Text dynText;
 
-	int upgrade_total = 2;//sizeof(upgrade);
+	//int upgrade_total = 2;//sizeof(upgrade);
 	for (int i=0; i<upgrade_total; i++){
 		C2D_DrawRectSolid(20.0f, 85.0f + 25*i, 0.4f, 270.0f, 20.0f, C2D_Color32f(.5f,.5f,.5f,.5f));
 

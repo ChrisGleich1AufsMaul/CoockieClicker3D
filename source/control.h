@@ -14,6 +14,7 @@ extern float cookiesPerSecond;
 
 extern char upgrade[2][20];
 extern float upgrade_gain[2];
+extern int upgrade_total;
 
 extern int mode;
 extern bool loading;

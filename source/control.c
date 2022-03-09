@@ -22,6 +22,7 @@ bool msgbox = false;
 int cookiesTotal = 0;
 float cookiesPerSecond = 0;
 
+int upgrade_total = 2;
 char upgrade[2][20] = {"Autoclicker", "Clock"};
 float upgrade_gain[2] = {.1, 			1};
 
