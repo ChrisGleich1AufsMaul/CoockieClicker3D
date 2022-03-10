@@ -17,3 +17,8 @@ CookieClicker3D 🍪 is a homebrew software for the Nintendo 3DS 🎮 written in
   - [ ] Adding "buy upgrade" symbol
   - [ ] Adding details on top screen
   - [ ] Adding more upgrades
+
+- General stuff
+- [ ] Save/load game scores
+- [ ] Add 3D support
+- [ ] Add falling cookie animation
