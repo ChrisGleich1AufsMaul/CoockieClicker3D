@@ -4,8 +4,8 @@ CookieClicker3D 🍪 is a homebrew software for the Nintendo 3DS 🎮 written in
 ### Screenshots
 | Main screen | Shop screen |
 | :---: | :---: |
-| ![Top screen in main screen](https://raw.githubusercontent.com/ChrisCross19/CoockieClicker3D/main/2031-10-19_20-04-38.999_top.bmp) | ![Top screen shop](https://github.com/ChrisCross19/CoockieClicker3D/blob/main/2031-10-19_20-09-13.154_top.bmp) |
-| ![Bottom screen in main screen](https://github.com/ChrisCross19/CoockieClicker3D/blob/main/2031-10-19_20-04-38.999_bot.bmp) | ![Bottom screen shop](https://github.com/ChrisCross19/CoockieClicker3D/blob/main/2031-10-19_20-09-13.154_bot.bmp) |  
+| ![Top screen in main screen](https://raw.githubusercontent.com/ChrisCross19/CoockieClicker3D/main/2031-10-19_20-04-38.999_top.bmp) | ![Top screen shop](https://raw.githubusercontent.com/ChrisGleich1AufsMaul/CoockieClicker3D/main/2022-03-10_21-04-05.496_top.bmp) |
+| ![Bottom screen in main screen](https://github.com/ChrisCross19/CoockieClicker3D/blob/main/2031-10-19_20-04-38.999_bot.bmp) | ![Bottom screen shop](https://raw.githubusercontent.com/ChrisGleich1AufsMaul/CoockieClicker3D/main/2022-03-10_21-04-05.496_bot.bmp) |  
 
   
 ### Bugs
