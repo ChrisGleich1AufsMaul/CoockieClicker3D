@@ -41,7 +41,7 @@ ROMFS		:=	romfs
 LIBRARY		:=	library
 GFXBUILD	:=	$(ROMFS)/gfx
 #---------------------------------------------------------------------------------
-APP_VER						:= 9
+APP_VER						:= 10
 APP_TITLE					:= CookieClicker3D
 APP_DESCRIPTION				:= Cookie Clicker for the 3DS
 APP_AUTHOR					:= ChrisGleich1AufsMaul
@@ -71,7 +71,9 @@ CXXFLAGS	:= $(CFLAGS) -fno-exceptions -std=gnu++14
 ASFLAGS	:= $(ARCH)
 LDFLAGS	=	-specs=3dsx.specs $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lavfilter -lswresample -lavformat -lswscale -lavcodec -lavutil -lcurl -lmbedtls -lmbedx509 -lmbedcrypto -lz  -lcitro2d -lcitro3d -lctru -lm
+LIBS	:= -lcitro2d -lcitro3d -lctru -lm 
+#-lfat -lnds9 #fat lib
+#-lavfilter -lswresample -lavformat -lswscale -lavcodec -lavutil -lcurl -lmbedtls -lmbedx509 -lmbedcrypto -lz   -lm
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing

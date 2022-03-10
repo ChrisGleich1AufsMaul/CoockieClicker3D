@@ -51,6 +51,8 @@ control.o: P:/Homebrew/CookieClicker3D_git/source/control.c \
  G:/devkitPro/libctru/include/3ds/services/ps.h \
  G:/devkitPro/libctru/include/3ds/services/ptmu.h \
  G:/devkitPro/libctru/include/3ds/services/ptmsysm.h \
+ G:/devkitPro/libctru/include/3ds/services/ptmgets.h \
+ G:/devkitPro/libctru/include/3ds/services/ptmsets.h \
  G:/devkitPro/libctru/include/3ds/services/pxidev.h \
  G:/devkitPro/libctru/include/3ds/services/pxipm.h \
  G:/devkitPro/libctru/include/3ds/services/soc.h \
@@ -79,9 +81,7 @@ control.o: P:/Homebrew/CookieClicker3D_git/source/control.c \
  G:/devkitPro/libctru/include/3ds/romfs.h \
  G:/devkitPro/libctru/include/3ds/font.h \
  G:/devkitPro/libctru/include/3ds/gdbhio_dev.h \
- P:/Homebrew/CookieClicker3D_git/source/control.h \
- P:/Homebrew/CookieClicker3D_git/source/input.h \
- P:/Homebrew/CookieClicker3D_git/source/gui.h \
+ G:/devkitPro/libctru/include/3ds/3dslink.h \
  G:/devkitPro/libctru/include/citro2d.h \
  G:/devkitPro/libctru/include/citro3d.h \
  G:/devkitPro/libctru/include/c3d/types.h \
@@ -106,6 +106,9 @@ control.o: P:/Homebrew/CookieClicker3D_git/source/control.c \
  G:/devkitPro/libctru/include/c2d/sprite.h \
  G:/devkitPro/libctru/include/c2d/text.h \
  G:/devkitPro/libctru/include/c2d/font.h \
+ P:/Homebrew/CookieClicker3D_git/source/control.h \
+ P:/Homebrew/CookieClicker3D_git/source/input.h \
+ P:/Homebrew/CookieClicker3D_git/source/gui.h \
  P:/Homebrew/CookieClicker3D_git/source/main.h
 G:/devkitPro/libctru/include/3ds.h:
 G:/devkitPro/libctru/include/3ds/types.h:
@@ -159,6 +162,8 @@ G:/devkitPro/libctru/include/3ds/services/pmdbg.h:
 G:/devkitPro/libctru/include/3ds/services/ps.h:
 G:/devkitPro/libctru/include/3ds/services/ptmu.h:
 G:/devkitPro/libctru/include/3ds/services/ptmsysm.h:
+G:/devkitPro/libctru/include/3ds/services/ptmgets.h:
+G:/devkitPro/libctru/include/3ds/services/ptmsets.h:
 G:/devkitPro/libctru/include/3ds/services/pxidev.h:
 G:/devkitPro/libctru/include/3ds/services/pxipm.h:
 G:/devkitPro/libctru/include/3ds/services/soc.h:
@@ -187,9 +192,7 @@ G:/devkitPro/libctru/include/3ds/archive.h:
 G:/devkitPro/libctru/include/3ds/romfs.h:
 G:/devkitPro/libctru/include/3ds/font.h:
 G:/devkitPro/libctru/include/3ds/gdbhio_dev.h:
-P:/Homebrew/CookieClicker3D_git/source/control.h:
-P:/Homebrew/CookieClicker3D_git/source/input.h:
-P:/Homebrew/CookieClicker3D_git/source/gui.h:
+G:/devkitPro/libctru/include/3ds/3dslink.h:
 G:/devkitPro/libctru/include/citro2d.h:
 G:/devkitPro/libctru/include/citro3d.h:
 G:/devkitPro/libctru/include/c3d/types.h:
@@ -214,4 +217,7 @@ G:/devkitPro/libctru/include/c2d/spritesheet.h:
 G:/devkitPro/libctru/include/c2d/sprite.h:
 G:/devkitPro/libctru/include/c2d/text.h:
 G:/devkitPro/libctru/include/c2d/font.h:
+P:/Homebrew/CookieClicker3D_git/source/control.h:
+P:/Homebrew/CookieClicker3D_git/source/input.h:
+P:/Homebrew/CookieClicker3D_git/source/gui.h:
 P:/Homebrew/CookieClicker3D_git/source/main.h:

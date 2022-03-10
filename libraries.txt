@@ -1,0 +1,1 @@
+https://github.com/devkitPro/libfat/releases/tag/v1.1.5
