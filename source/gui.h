@@ -12,10 +12,10 @@ extern C2D_TextBuf g_staticBuf, g_dynamicBuf;
 void initializeData();
 
 
-void renderMainScreen_Top(bool log);
+void renderMainScreen_Top();
 void renderMainScreen_Bottom();
 
-void renderShopScreen_Top(bool log);
+void renderShopScreen_Top();
 void renderShopScreen_Bottom();
 
 

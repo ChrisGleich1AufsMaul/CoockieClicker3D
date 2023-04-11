@@ -45,7 +45,7 @@ void InitSettingsScreen(void)
 //Renderfunctions
 
 /////////////////////////////////////////				Main Screen 			////////////////////////////
-void renderMainScreen_Top(bool log)
+void renderMainScreen_Top()
 {
 	 C2D_DrawText(&g_headlineText[0], C2D_AtBaseline | C2D_WithColor, 60.0f, 100.0f, 0.5f, 1.4f, 1.4f, C2D_Color32f(1.0f,.6f,.2f,1.0f));	
 
@@ -56,14 +56,14 @@ void renderMainScreen_Top(bool log)
 	char buf[160];
 	C2D_Text dynText;
 
-	if(log){
+	if(logToggle){
 		C2D_DrawRectSolid(0.0, 150., 0.4, 150, 60, C2D_Color32f(0,0,0,1));
 		float fontSize = .5;
 
-		snprintf(buf, sizeof(buf), "%li", hidKeysDown());
-		C2D_TextParse(&dynText, g_dynamicBuf, buf);
-		C2D_TextOptimize(&dynText);
-		C2D_DrawText(&dynText, C2D_AtBaseline | C2D_WithColor, 10.0f, 165.0f, 0.5f, fontSize, fontSize, C2D_Color32f(1.0f,1.0f,1.0f,1.0f));	
+		// snprintf(buf, sizeof(buf), "%li", hidKeysDown());
+		// C2D_TextParse(&dynText, g_dynamicBuf, buf);
+		// C2D_TextOptimize(&dynText);
+		// C2D_DrawText(&dynText, C2D_AtBaseline | C2D_WithColor, 10.0f, 165.0f, 0.5f, fontSize, fontSize, C2D_Color32f(1.0f,1.0f,1.0f,1.0f));	
 
 		//snprintf(buf, sizeof(buf), "%d", sizeof(upgrade));
 		snprintf(buf, sizeof(buf), "%i", seconds);
@@ -102,7 +102,7 @@ void renderMainScreen_Bottom()
 	C2D_DrawText(&dynText, C2D_AtBaseline | C2D_WithColor, 10.0f, 40.0f, 0.5f, .7f, .7f, C2D_Color32f(.8f, .8f, .8f, 1.0f));	
 }
 /////////////////////////////////////////				Shop Screen 			////////////////////////////
-void renderShopScreen_Top(bool log)
+void renderShopScreen_Top()
 {
 	C2D_DrawText(&g_headlineText[0], C2D_AtBaseline | C2D_WithColor, 60.0f, 100.0f, 0.5f, 1.4f, 1.4f, C2D_Color32f(1.0f,.6f,.2f,1.0f));	
 
@@ -113,7 +113,7 @@ void renderShopScreen_Top(bool log)
 	char buf[160];
 	C2D_Text dynText;
 
-	if(log){
+	if(logToggle){
 		C2D_DrawRectSolid(0.0, 160., 0.4, 150, 60, C2D_Color32f(0,0,0,1));
 
 		snprintf(buf, sizeof(buf), "%li", hidKeysDown());

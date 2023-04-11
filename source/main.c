@@ -23,7 +23,8 @@ static void initSprites() {
 	if (!spriteSheet) svcBreak(USERBREAK_PANIC);
 
 	C2D_SpriteFromSheet(&cookie, spriteSheet, 0);
-	C2D_SpriteSetPos(&cookie, 320/2 - 55, 70);
+	C2D_SpriteSetCenterRaw(&cookie, 55, 55);
+	C2D_SpriteSetPos(&cookie, 320/2, 120);
 
 	C2D_SpriteFromSheet(&shop_icon, spriteSheet, 1);
 	C2D_SpriteSetPos(&shop_icon, 320/2 - 60, 190);
@@ -76,14 +77,26 @@ int main()
 
 
 			C2D_SceneBegin(top);
-				renderMainScreen_Top(true); //log output: true
+				renderMainScreen_Top();
+				if(msgbox)
+				{
+					MessageBox(msgTitle, msgMessage, msgButtons, 1);
+				}
 				
 			C2D_SceneBegin(bottom);
 				if (mode == 1)
-				{							
-						C2D_DrawSprite(&cookie);
-						C2D_DrawSprite(&shop_icon);
-						renderMainScreen_Bottom();
+				{	
+					//small "pumping"-animation when pressing cookie
+					if(cookie_press)
+					{
+						C2D_SpriteSetScale(&cookie, .75, .75);
+						cookie_press = false;
+					} else {
+						C2D_SpriteSetScale(&cookie, 1, 1);
+					}
+					C2D_DrawSprite(&cookie);
+					C2D_DrawSprite(&shop_icon);
+					renderMainScreen_Bottom();
 				}
 				else if(mode == 2)
 				{	
@@ -107,6 +120,8 @@ int main()
 					// renderBottomSettingsScreen();
 					
 				}
+
+				
 		C3D_FrameEnd(0);
 ///////////		
 

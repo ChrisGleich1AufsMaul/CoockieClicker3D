@@ -15,7 +15,8 @@
 #include "main.h"
 
 
-
+bool logToggle = false;
+bool cookie_press;
 
 bool ignoreMessage = false;
 int mode = 1;
@@ -59,61 +60,80 @@ void app()
 	else
 		justPressed = false;
 
-
-	
-	if (mode == 1)//App menu
-	{
-		// for(int i=9; i<360; i++){
-		// 	float r = 55;
-		// 	float pointX = cos(i);
-		// 	float pointY = sin(i);
-			// if (ButtonClick("Cookie_Click", 320/2 - 55, 60, 110, 110) && justPressed) {
-		if (kDown != kDownOld || kHeld != kHeldOld)// || kUp != kUpOld)
-		{
-			if (ButtonClick("Cookie_Click", 320/2 - 55, 60, 110, 110)) {
-					cookiesTotal++;
-			}
-			if (ButtonClick("openShop_Click", 320/2 - 60, 190, 120, 50)) {
-					mode = 2;
-			}
+	//exit message
+	if(msgbox){
+		if(kDown & KEY_A){
+			mode = 0; //Exit
+		}else if(kDown & KEY_B){
+			msgbox = false;
 		}
 
-		//Set keys old values for the next frame
-		kDownOld = kDown;
-		kHeldOld = kHeld;
-		kUpOld = kUp;
-		// }
-
 	}
-	else if (mode == 2) //Shop
+	else
 	{
-		if (kDown != kDownOld || kHeld != kHeldOld)// || kUp != kUpOld)
+		if (mode == 1)//App menu
 		{
-			if (ButtonClick("closeShop_Click", 320/2 - 60, 5, 120, 50)) {
-				mode = 1; 
+			// for(int i=9; i<360; i++){
+			// 	float r = 55;
+			// 	float pointX = cos(i);
+			// 	float pointY = sin(i);
+				// if (ButtonClick("Cookie_Click", 320/2 - 55, 60, 110, 110) && justPressed) {
+			if (kDown != kDownOld || kHeld != kHeldOld)// || kUp != kUpOld)
+			{
+				if (ButtonClick("Cookie_Click", 320/2 - 55, 60, 110, 110)) {
+						cookiesTotal++;
+						cookie_press = true;
+				}
+
+				if (ButtonClick("openShop_Click", 320/2 - 60, 190, 120, 50)) {
+						mode = 2;
+				}
 			}
 
-			for (int i=0; i<upgrades_total; i++){
-				//C2D_DrawRectSolid(20.0f, 85.0f + 25*i, 0.4f, 270.0f, 20.0f, C2D_Color32f(.5f,.5f,.5f,.5f));
-				if (ButtonClick("upgrade", 20, 85 + 25*i, 270, 20)) {
-					float upgradeCostsCalc = upgrade_costs[i] + upgrade_costs[i] * upgradeInventar[i];
-					if(upgradeCostsCalc<cookiesTotal){
-						if(upgradeInventar[i]!=0) cookiesTotal -= upgradeCostsCalc; else cookiesTotal -= upgrade_costs[i];
-						upgradeInventar[i]++;
+			//Set keys old values for the next frame
+			kDownOld = kDown;
+			kHeldOld = kHeld;
+			kUpOld = kUp;
+			// }
+
+		}
+		else if (mode == 2) //Shop
+		{
+			if (kDown != kDownOld || kHeld != kHeldOld)// || kUp != kUpOld)
+			{
+				if (ButtonClick("closeShop_Click", 320/2 - 60, 5, 120, 50)) {
+					mode = 1; 
+				}
+
+				for (int i=0; i<upgrades_total; i++){
+					//C2D_DrawRectSolid(20.0f, 85.0f + 25*i, 0.4f, 270.0f, 20.0f, C2D_Color32f(.5f,.5f,.5f,.5f));
+					if (ButtonClick("upgrade", 20, 85 + 25*i, 270, 20)) {
+						float upgradeCostsCalc = upgrade_costs[i] + upgrade_costs[i] * upgradeInventar[i];
+						if(upgradeCostsCalc<cookiesTotal){
+							if(upgradeInventar[i]!=0) cookiesTotal -= upgradeCostsCalc; else cookiesTotal -= upgrade_costs[i];
+							upgradeInventar[i]++;
+						}
 					}
 				}
 			}
+			if (kDown & KEY_SELECT){
+				mode = 1;
+			}
+
+
 		}
-		if (kDown & KEY_SELECT){
-			mode = 1;
+
+		//toggle log
+		if (kDown & KEY_L && kDown & KEY_R && kDown & KEY_DDOWN){
+			logToggle = !logToggle;
 		}
 
-	
-
-
+		if(kDown & KEY_SELECT){
+			msgbox = true;
+			renderMsgBox("Exit?", "", 2);
+			
+		}
 	}
-
-	
 	time_t unixTime = time(NULL);
 	struct tm* timeStruct = gmtime((const time_t *)&unixTime);
 

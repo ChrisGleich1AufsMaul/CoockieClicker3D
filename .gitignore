@@ -9,3 +9,16 @@ resources/banner/Banner-Project.blend
 resources/banner/Banner-Project.blend1
 upload.cmd
 CookieClicker3D_git.cia
+build/sprites.d
+build/main.o
+build/main.d
+build/input.o
+build/input.d
+build/gui.o
+build/gui.d
+build/CookieClicker3D_git.map
+build/CookieClicker3D_git.lst
+build/CookieClicker3D.map
+build/CookieClicker3D.lst
+build/control.o
+build/control.d

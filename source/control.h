@@ -3,11 +3,11 @@
 
 void app();
 void StartUp();
-void getWeather();
 void variableReset();
 void doAppJump();
 extern int checkStatus();
 
+extern bool cookie_press;
 
 extern float cookiesTotal;
 extern float cookiesPerSecond;
@@ -19,6 +19,7 @@ extern float upgradeInventar[2];
 extern int upgrades_total;
 
 extern int mode;
+extern bool msgbox;
 extern bool loading;
 
 
@@ -28,4 +29,8 @@ extern int year;
 extern int hours;
 extern int minutes;
 extern int seconds;
+
+
+
+extern bool logToggle;
 #endif
