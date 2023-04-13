@@ -47,7 +47,7 @@ void InitSettingsScreen(void)
 /////////////////////////////////////////				Main Screen 			////////////////////////////
 void renderMainScreen_Top()
 {
-	 C2D_DrawText(&g_headlineText[0], C2D_AtBaseline | C2D_WithColor, 60.0f, 100.0f, 0.5f, 1.4f, 1.4f, C2D_Color32f(1.0f,.6f,.2f,1.0f));	
+	 C2D_DrawText(&g_headlineText[0], C2D_AtBaseline | C2D_WithColor, 60.0f, 100.0f, .1f, 1.4f, 1.4f, C2D_Color32f(1.0f,.6f,.2f,1.0f));	
 
 
 	//dynamic text
@@ -60,7 +60,7 @@ void renderMainScreen_Top()
 		C2D_DrawRectSolid(0.0, 150., 0.4, 150, 60, C2D_Color32f(0,0,0,1));
 		float fontSize = .5;
 
-		// snprintf(buf, sizeof(buf), "%li", hidKeysDown());
+		// snprintf(buf, sizeof(buf), "msgButton: %i", msgButtonOkay);
 		// C2D_TextParse(&dynText, g_dynamicBuf, buf);
 		// C2D_TextOptimize(&dynText);
 		// C2D_DrawText(&dynText, C2D_AtBaseline | C2D_WithColor, 10.0f, 165.0f, 0.5f, fontSize, fontSize, C2D_Color32f(1.0f,1.0f,1.0f,1.0f));	
@@ -104,23 +104,23 @@ void renderMainScreen_Bottom()
 /////////////////////////////////////////				Shop Screen 			////////////////////////////
 void renderShopScreen_Top()
 {
-	C2D_DrawText(&g_headlineText[0], C2D_AtBaseline | C2D_WithColor, 60.0f, 100.0f, 0.5f, 1.4f, 1.4f, C2D_Color32f(1.0f,.6f,.2f,1.0f));	
+	// C2D_DrawText(&g_headlineText[0], C2D_AtBaseline | C2D_WithColor, 60.0f, 100.0f, 0.5f, 1.4f, 1.4f, C2D_Color32f(1.0f,.6f,.2f,1.0f));	
 
 
-	//dynamic text
-	C2D_TextBufClear(g_dynamicBuf);
+	// //dynamic text
+	// C2D_TextBufClear(g_dynamicBuf);
 	
-	char buf[160];
-	C2D_Text dynText;
+	// char buf[160];
+	// C2D_Text dynText;
 
-	if(logToggle){
-		C2D_DrawRectSolid(0.0, 160., 0.4, 150, 60, C2D_Color32f(0,0,0,1));
+	// if(logToggle){
+	// 	C2D_DrawRectSolid(0.0, 160., 0.4, 150, 60, C2D_Color32f(0,0,0,1));
 
-		snprintf(buf, sizeof(buf), "%li", hidKeysDown());
-		C2D_TextParse(&dynText, g_dynamicBuf, buf);
-		C2D_TextOptimize(&dynText);
-		C2D_DrawText(&dynText, C2D_AtBaseline | C2D_WithColor, 10.0f, 190.0f, 0.5f, 0.8f, 0.8f, C2D_Color32f(1.0f,1.0f,1.0f,1.0f));	
-	}
+	// 	snprintf(buf, sizeof(buf), "%li", hidKeysDown());
+	// 	C2D_TextParse(&dynText, g_dynamicBuf, buf);
+	// 	C2D_TextOptimize(&dynText);
+	// 	C2D_DrawText(&dynText, C2D_AtBaseline | C2D_WithColor, 10.0f, 190.0f, 0.5f, 0.8f, 0.8f, C2D_Color32f(1.0f,1.0f,1.0f,1.0f));	
+	// }
 
 }
 void renderShopScreen_Bottom()
@@ -199,7 +199,7 @@ void renderShopScreen_Bottom()
 
 
 
-void MessageBox(char* title, char* message, int buttons, int screen)
+void MessageBox(char* title, MSG_BOX_ALIGN msgAlign, char* message, MSG_BOX_BUTTON msgButtons, int screen)
 {
 	C2D_TextBufClear(g_dynamicBuf);
 	
@@ -222,12 +222,12 @@ void MessageBox(char* title, char* message, int buttons, int screen)
 	C2D_TextOptimize(&messageText); 
 	C2D_DrawText(&messageText, C2D_AtBaseline | C2D_WithColor, 40.0f, 90.0f, 0.9f, 0.6f, 0.6f, C2D_Color32f(0.0f,0.0f,0.0f,1.0f));
 
-	if (buttons == 1){		
+	if (msgButtons == msgButtonOkay){		
 		snprintf(buf, sizeof(buf), "%s", " Okay");
 		C2D_TextParse(&buttonsText, g_dynamicBuf, buf);
 		C2D_TextOptimize(&buttonsText); 
 		C2D_DrawText(&buttonsText, C2D_AtBaseline | C2D_WithColor, 170.0f, 200.0f, 0.9f, 0.6f, 0.6f, C2D_Color32f(0.0f,0.0f,0.0f,1.0f));
-	} else 	if (buttons == 2){		
+	} else 	if (msgButtons == msgButtonOkayAbort){		
 		snprintf(buf, sizeof(buf), "%s", " Okay");
 		C2D_TextParse(&buttonsText, g_dynamicBuf, buf);
 		C2D_TextOptimize(&buttonsText); 

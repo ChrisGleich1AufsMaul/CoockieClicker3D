@@ -15,6 +15,14 @@
 #include "main.h"
 
 
+MSG_BOX_STYLE msgBoxStyle;
+// MSG_BOX_BUTTON MsgButtonOkay = 1;
+// MSG_BOX_BUTTON MsgButtonOkayAbort = 2;
+MSG_BOX_ALIGN MessageBoxAlignLeft = 1;
+MSG_BOX_ALIGN MessageBoxAlignCenter = 2;
+MSG_BOX_ALIGN MessageBoxAlignRight = 3;
+
+
 bool logToggle = false;
 bool cookie_press;
 
@@ -23,11 +31,11 @@ int mode = 1;
 bool msgbox = false;
 
 
-float cookiesTotal = 180;
+float cookiesTotal = 3000;
 float cookiesPerSecond = 0;
 
-int upgrades_total = 2;
-char upgrade[2][20] = {"Autoclicker", "Clock"};
+const int upgrades_total = 2;
+const char upgrade[2][20] = {"Autoclicker", "Clock"};
 float upgrade_costs[2] = {50, 			200};
 float upgrade_gain[2] = {.1, 			1};
 float upgradeInventar[2] = {0, 			0};
@@ -129,11 +137,17 @@ void app()
 		}
 
 		if(kDown & KEY_SELECT){
-			msgbox = true;
-			renderMsgBox("Exit?", "", 2);
-			
+			Message_Box exitMsg;
+			exitMsg.msgTitle = "Exit?";
+			exitMsg.msgAlign = msgBoxStyle.MessageBoxAlignCenter;
+			exitMsg.msgMessage = "";
+			exitMsg.msgButtons = msgButtonOkayAbort;//msgBoxStyle.MessageBoxButtonsOkayAbort; //msgBoxButton.okayAbort;
+			exitMsg.show = true;
+			prepMsgBox(exitMsg);
 		}
 	}
+
+	
 	time_t unixTime = time(NULL);
 	struct tm* timeStruct = gmtime((const time_t *)&unixTime);
 
@@ -143,6 +157,7 @@ void app()
 	hours = timeStruct->tm_hour;
 	minutes = timeStruct->tm_min;
 	seconds = timeStruct->tm_sec;
+
 	if(seconds!=seconds_old){
 		seconds_old = seconds;
 		for (int i=0; i<upgrades_total; i++){

@@ -4,8 +4,10 @@
 #include <citro2d.h>
 
 
+
+
 int main();
 
-void renderMsgBox();
+void prepMsgBox();
 
 #endif

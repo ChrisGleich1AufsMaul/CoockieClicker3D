@@ -1,5 +1,6 @@
 #include <citro2d.h>
 #include <3ds.h>
+#include "control.h"
 #ifndef GUI_H
 #define GUI_H
 
@@ -29,7 +30,7 @@ void InitSettingsScreen();
 // void initImg();
 
 
-void MessageBox(char* title, char* message, int buttons, int screen);
+void MessageBox(char* title, MSG_BOX_ALIGN msgAlign, char* message, MSG_BOX_BUTTON msgButtons, int screen);
 
 void exitScene();
 
