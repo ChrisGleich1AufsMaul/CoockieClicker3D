@@ -78,6 +78,7 @@ extern int minutes;
 extern int seconds;
 
 
-
 extern bool logToggle;
+
+extern float RandomNumber(float Min, float Max);
 #endif

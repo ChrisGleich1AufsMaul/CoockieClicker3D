@@ -2,15 +2,22 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <citro2d.h>
 #include "gui.h"
 #include "control.h"
-#include <citro2d.h>
 
 #define ctablesize 3
 #define posxysize 240
 
 
 char buffer[100];
+static char CC_Headline[64];
+
+//C3D
+C3D_BufInfo g_drawBufInfo;
+static drawVertex_s* s_drawBuffer;
+static int s_drawBufferPos;
+static float s_drawBufferZ = 0.5;
 
 ///////////////////////////////////////////
 //                 menues                //
@@ -25,12 +32,26 @@ void initBuffer()
 {
 	g_staticBuf  = C2D_TextBufNew(4096); // support up to 4096 glyphs in the buffer
 	g_dynamicBuf = C2D_TextBufNew(4096);
+
+	
+	// Create vertex buffer
+	s_drawBuffer = (drawVertex_s*)linearAlloc(sizeof(drawVertex_s)*DRAWING_MAX_VERTICES);
+	
+	// Configure buffer informations
+	BufInfo_Init(&g_drawBufInfo);
+	BufInfo_Add(&g_drawBufInfo, s_drawBuffer, sizeof(drawVertex_s), 2, 0x10);
+
+	BufInfo_Add(&g_drawBufInfo, s_drawBuffer, sizeof(drawVertex_s), 2, 0x10);
 }
 void initMainScreen(void)
 {
 	//Top screen
 	C2D_TextParse(&g_headlineText[0], g_staticBuf, "CookieClicker3D");
 	C2D_TextOptimize(&g_headlineText[0]);
+
+	
+	// sprintf(CC_Headline, "CookieClicker3D \xEE\x80\x9D");
+	sprintf(CC_Headline, "CookieClicker3D");
 
 }
 void InitSettingsScreen(void)
@@ -39,16 +60,82 @@ void InitSettingsScreen(void)
 	C2D_TextOptimize(&g_staticText[11]);
 }
 
+///////////////////////////////////////////
+//                  C3D                  //
+///////////////////////////////////////////
+// void drawingSubmitPrim(GPU_Primitive_t prim, int vertices)
+// {
+// 	C3D_DrawArrays(prim, s_drawBufferPos-vertices, vertices);
+// }
+// void drawingAddVertex(float vx, float vy, float tx, float ty)
+// {
+// 	drawVertex_s* vtx = &s_drawBuffer[s_drawBufferPos++];
+// 	vtx->position[0] = vx;
+// 	vtx->position[1] = vy;
+// 	vtx->position[2] = s_drawBufferZ;
+// 	vtx->texcoord[0] = tx;
+// 	vtx->texcoord[1] = ty;
+// }
 
+// void textDraw(float x, float y, float scaleX, float scaleY, bool baseline, const char* text)
+// {
+	
+// 	static float s_textScale;
+
+
+// 	ssize_t  units;
+// 	uint32_t code;
+
+// 	const uint8_t* p = (const uint8_t*)text;
+// 	float firstX = x;
+// 	u32 flags = GLYPH_POS_CALC_VTXCOORD | (baseline ? GLYPH_POS_AT_BASELINE : 0);
+// 	scaleX *= s_textScale;
+// 	scaleY *= s_textScale;
+// 	do
+// 	{
+// 		if (!*p) break;
+// 		units = decode_utf8(&code, p);
+// 		if (units == -1)
+// 			break;
+// 		p += units;
+// 		if (code == '\n')
+// 		{
+// 			x = firstX;
+// 			y += ceilf(scaleY*fontGetInfo(NULL)->lineFeed);
+// 		}
+// 		else if (code > 0)
+// 		{
+// 			int glyphIdx = fontGlyphIndexFromCodePoint(NULL, code);
+// 			fontGlyphPos_s data;
+// 			fontCalcGlyphPos(&data, NULL, glyphIdx, flags, scaleX, scaleY);
+
+// 			// Draw the glyph
+// 			// drawingSetTex(&s_glyphSheets[data.sheetIndex]);
+// 			drawingAddVertex(x+data.vtxcoord.left,  y+data.vtxcoord.bottom, data.texcoord.left,  data.texcoord.bottom);
+// 			drawingAddVertex(x+data.vtxcoord.right, y+data.vtxcoord.bottom, data.texcoord.right, data.texcoord.bottom);
+// 			drawingAddVertex(x+data.vtxcoord.left,  y+data.vtxcoord.top,    data.texcoord.left,  data.texcoord.top);
+// 			drawingAddVertex(x+data.vtxcoord.right, y+data.vtxcoord.top,    data.texcoord.right, data.texcoord.top);
+// 			drawingSubmitPrim(GPU_TRIANGLE_STRIP, 4);
+
+// 			x += data.xAdvance;
+
+// 		}
+// 	} while (code > 0);
+// }
+
+// textDrawInBox(CC_Headline, 1, 0.5f, 0.5f, 200.0f, 80.0f, logo_right);
+// void textDrawInBox(const char* text, int orientation, float scaleX, float scaleY, float baseline, float left, float right)
 
 
 //Renderfunctions
 
 /////////////////////////////////////////				Main Screen 			////////////////////////////
-void renderMainScreen_Top()
+void renderMainScreen_Top(float iod)
 {
-	 C2D_DrawText(&g_headlineText[0], C2D_AtBaseline | C2D_WithColor, 60.0f, 100.0f, .1f, 1.4f, 1.4f, C2D_Color32f(1.0f,.6f,.2f,1.0f));	
-
+	C2D_DrawText(&g_headlineText[0], C2D_AtBaseline | C2D_WithColor, 60.0f + iod, 100.0f, .2f, 1.4f, 1.4f, C2D_Color32f(1.0f,.6f,.2f,1.0f));	
+	
+	float scale = 1;
+	// textDraw(100, 100, scale, scale, true, CC_Headline);
 
 	//dynamic text
 	C2D_TextBufClear(g_dynamicBuf);
